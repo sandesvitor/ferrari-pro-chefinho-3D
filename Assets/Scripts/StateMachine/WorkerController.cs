@@ -7,7 +7,7 @@ public class WorkerController : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private bool isWorkerFollowingMouse = true;
     [SerializeField] private bool isWorkerDoingTask = false;
-    [SerializeField] private Vector2 speedRange = new Vector2(7f, 10f);
+    [SerializeField] private Vector2 speedRange = new Vector2(5f, 10f);
 
     void Start()
     {
