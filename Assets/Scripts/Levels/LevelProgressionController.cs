@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelProgression : MonoBehaviour
+public class LevelProgressionController : MonoBehaviour
 {
     private GameManager _gameManager; 
     private GameObject[] members;
