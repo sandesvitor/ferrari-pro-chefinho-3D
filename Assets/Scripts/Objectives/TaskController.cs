@@ -53,7 +53,6 @@ public class TaskController : MonoBehaviour
     {
         yield return new WaitForSeconds(timeOfCompletion);
         isCompleted = true;
-
     }
 
     void OnDrawGizmos()

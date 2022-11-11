@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Threading.Tasks;
@@ -35,5 +36,15 @@ public class LevelObjectiveController : MonoBehaviour
 
         StartCoroutine(taskForValidation.TaskTimer());
         return true;
+    }
+
+    private IEnumerator UpdateTimer(int remainingDuration)
+    {
+        while(remainingDuration >= 0)
+        {
+            Debug.Log($"Remaining Seconds: {remainingDuration.ToString()}");
+            remainingDuration--;
+            yield return new WaitForSeconds(1f);
+        }
     }
 }
