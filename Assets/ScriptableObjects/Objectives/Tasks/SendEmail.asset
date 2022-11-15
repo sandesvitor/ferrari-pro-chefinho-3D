@@ -15,6 +15,5 @@ MonoBehaviour:
   taskName: SendEmail
   numberOfWorkersToStart: 1
   timeOfCompletion: 15
-  id: 1
   isCompleted: 0
   isTaskBeingDone: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,17 @@ public class TaskController : MonoBehaviour
     public bool isTaskBeingDone;
 
     [SerializeField] private List<WorkerController> workers;
+
+    public static event Action<int, float> OnTaskStarted = delegate { };
+
+    public static event Action<int, Transform> OnProgressBarAdded = delegate { };
+
+
+    private void OnEnable()
+    {
+        OnProgressBarAdded(id, this.transform);
+        // OnTaskStarted(id, timeOfCompletion);
+    }
 
     void Start()
     {
@@ -40,7 +52,7 @@ public class TaskController : MonoBehaviour
 
             if (workers.Count == numberOfWorkersToStart && isCompleted == false)
             {
-                workers.Add(worker);
+                TaskController.OnTaskStarted(id, timeOfCompletion);
                 StartCoroutine(StartTaskLifecycle());
             }
         }
