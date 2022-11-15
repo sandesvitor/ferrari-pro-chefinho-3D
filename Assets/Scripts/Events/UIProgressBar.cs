@@ -15,8 +15,14 @@ public class UIProgressBar : MonoBehaviour
         progressBarFill = GetComponent<Image>();
     }
 
+    private void Start()
+    {
+        progressBarFill.enabled = false;
+    }
+
     public void SetTaskProgress(Transform taskTransform)
     {
+        progressBarFill.enabled = true;
         this.taskTransform = taskTransform;
         this.transform.position = taskTransform.position + new Vector3(0, taskTransform.transform.localScale.y, 0f) * positionOffset;
         this.transform.rotation = taskTransform.rotation;

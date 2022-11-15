@@ -89,7 +89,6 @@ public class TaskController : MonoBehaviour
     {
         float remainingDuration = timeOfCompletion;
         isTaskBeingDone = true;
-        //progressBarFill.enabled = true;
 
         for (int i = 0; i < workers.Count; i++)
         {
@@ -98,9 +97,6 @@ public class TaskController : MonoBehaviour
 
         while(remainingDuration >= 0)
         {
-            //progressBarFill.color = GetProgressBarColor(progressBarFill.fillAmount);
-            Debug.Log($"Remaining Seconds: {remainingDuration.ToString()}");
-            //progressBarFill.fillAmount = Mathf.InverseLerp(0, timeOfCompletion, remainingDuration);
             remainingDuration = remainingDuration - 1f;
             yield return new WaitForSeconds(1f);
         }
