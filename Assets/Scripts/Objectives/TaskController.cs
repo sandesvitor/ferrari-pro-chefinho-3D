@@ -15,7 +15,7 @@ public class TaskController : MonoBehaviour
     public bool isTaskBeingDone;
     public LevelObjectiveController levelObjectiveController;
 
-    public Image progressBarFill;
+    [SerializeField] private Image progressBarFill;
     
     [SerializeField] private List<GameObject> workersInsideTaskList; 
 
@@ -91,8 +91,8 @@ public class TaskController : MonoBehaviour
             progressBarFill.color = GetProgressBarColor(progressBarFill.fillAmount);
             Debug.Log($"Remaining Seconds: {remainingDuration.ToString()} / FillAmount: {progressBarFill.fillAmount.ToString()}");
             progressBarFill.fillAmount = Mathf.InverseLerp(0, timeOfCompletion, remainingDuration);
-            remainingDuration = remainingDuration - 0.1f;
-            yield return new WaitForSeconds(0.1f);
+            remainingDuration = remainingDuration - 1f;
+            yield return new WaitForSeconds(1f);
         }
 
         isCompleted = true;

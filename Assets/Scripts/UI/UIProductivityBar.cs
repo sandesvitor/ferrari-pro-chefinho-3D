@@ -56,7 +56,6 @@ public class UIProductivityBar : MonoBehaviour
 
         while(remainingDuration >= 0)
         {
-            Debug.Log($"{productivityBar.fillAmount}");
             productivityBar.color = GetProgressBarColor(productivityBar.fillAmount);
             productivityBar.fillAmount = Mathf.InverseLerp(0, secondsToEndProductivity, remainingDuration);
             remainingDuration -= 0.1f;
