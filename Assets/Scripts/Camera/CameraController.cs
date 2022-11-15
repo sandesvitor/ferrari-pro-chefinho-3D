@@ -45,7 +45,7 @@ public class CameraController : MonoBehaviour
             HandleMouseInput();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown("r"))
         {
             followTransform = null;
         }
@@ -66,35 +66,35 @@ public class CameraController : MonoBehaviour
             newZoom += Input.mouseScrollDelta.y * zoomAmount;
         }
 
-        // Mouse Camera Movement
-        if(Input.GetMouseButtonDown(0))
-        {
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
+        // // Mouse Camera Movement
+        // if(Input.GetMouseButtonDown(0))
+        // {
+        //     Plane plane = new Plane(Vector3.up, Vector3.zero);
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            float entry;
+        //     float entry;
 
-            if (plane.Raycast(ray, out entry))
-            {
-                dragStartPosition = ray.GetPoint(entry);
-            }
-        }
-        if(Input.GetMouseButton(0))
-        {
-            Plane plane = new Plane(Vector3.up, Vector3.zero);
+        //     if (plane.Raycast(ray, out entry))
+        //     {
+        //         dragStartPosition = ray.GetPoint(entry);
+        //     }
+        // }
+        // if(Input.GetMouseButton(0))
+        // {
+        //     Plane plane = new Plane(Vector3.up, Vector3.zero);
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            float entry;
+        //     float entry;
 
-            if (plane.Raycast(ray, out entry))
-            {
-                dragCurrentPosition = ray.GetPoint(entry);
+        //     if (plane.Raycast(ray, out entry))
+        //     {
+        //         dragCurrentPosition = ray.GetPoint(entry);
 
-                newPosition = this.transform.position + dragStartPosition - dragCurrentPosition;
-            }
-        }
+        //         newPosition = this.transform.position + dragStartPosition - dragCurrentPosition;
+        //     }
+        // }
     }
 
     void HandleMovementInput()
@@ -127,15 +127,15 @@ public class CameraController : MonoBehaviour
             newRotation *= Quaternion.Euler(Vector3.up * (-1f) * rotationAmount);
         }
 
-        // Camera Zoom
-        if(Input.GetKey("r") && (newZoom.y >= zoomMaxLimit.y && newZoom.z <= zoomMaxLimit.z))
-        {
-            newZoom += zoomAmount;
-        }
-        if(Input.GetKey("f") && (newZoom.y <= zoomMinLimit.y && newZoom.z >= zoomMinLimit.z))
-        {
-            newZoom -= zoomAmount;
-        }
+        // // Camera Zoom
+        // if(Input.GetKey("r") && (newZoom.y >= zoomMaxLimit.y && newZoom.z <= zoomMaxLimit.z))
+        // {
+        //     newZoom += zoomAmount;
+        // }
+        // if(Input.GetKey("f") && (newZoom.y <= zoomMinLimit.y && newZoom.z >= zoomMinLimit.z))
+        // {
+        //     newZoom -= zoomAmount;
+        // }
 
         transform.position = Vector3.Lerp(this.transform.position, newPosition, Time.deltaTime * movementTime);
         transform.rotation = Quaternion.Lerp(this.transform.rotation, newRotation, Time.deltaTime * movementTime);
