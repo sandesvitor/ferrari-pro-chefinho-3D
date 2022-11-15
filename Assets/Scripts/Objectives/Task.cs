@@ -8,4 +8,5 @@ public class Task : ScriptableObject
     public int numberOfWorkersToStart;
     public float timeOfCompletion;
     public bool isCompleted = false;
+    public bool isTaskBeingDone = false;
 }

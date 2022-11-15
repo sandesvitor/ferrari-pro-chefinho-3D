@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc955571cdd61eb1197fa1761db0e551, type: 3}
-  m_Name: Task2
+  m_Name: SendEmail
   m_EditorClassIdentifier: 
   taskName: SendEmail
-  numberOfWorkersToStart: 3
+  numberOfWorkersToStart: 1
   timeOfCompletion: 15
   isCompleted: 0
+  isTaskBeingDone: 0

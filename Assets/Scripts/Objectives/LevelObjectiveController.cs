@@ -11,6 +11,8 @@ public class LevelObjectiveController : MonoBehaviour
     public LevelObjective levelObjective;
     public List<TaskController> tasks;
 
+    [SerializeField] private bool startTimer; 
+
     public bool CheckTasksStartCondition(TaskController task, GameObject worker)
     {
         TaskController taskForValidation = tasks.Find(x => x == task);
@@ -26,6 +28,7 @@ public class LevelObjectiveController : MonoBehaviour
 
         if (isTaskCompleted)
         {
+            startTimer = false;
             return false;
         }
 
@@ -34,17 +37,13 @@ public class LevelObjectiveController : MonoBehaviour
             return false;
         }
 
-        StartCoroutine(taskForValidation.TaskTimer());
+        startTimer = true;
+        
         return true;
     }
 
-    private IEnumerator UpdateTimer(int remainingDuration)
+    public bool CheckIfWorkerIsDoingTask()
     {
-        while(remainingDuration >= 0)
-        {
-            Debug.Log($"Remaining Seconds: {remainingDuration.ToString()}");
-            remainingDuration--;
-            yield return new WaitForSeconds(1f);
-        }
+        return startTimer;
     }
 }

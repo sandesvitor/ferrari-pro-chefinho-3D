@@ -18,7 +18,7 @@ public class WorkerTaskInterface : MonoBehaviour
     
     void Update()
     {
-        StartDoingTask();
+        CheckTasksStartCondition();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -40,7 +40,7 @@ public class WorkerTaskInterface : MonoBehaviour
         }
     }
 
-    private void StartDoingTask()
+    private void CheckTasksStartCondition()
     {
         if (taskControllerList.Count <= 0)
         {
