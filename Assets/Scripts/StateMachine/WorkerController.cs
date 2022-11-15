@@ -74,9 +74,4 @@ public class WorkerController : MonoBehaviour
     {
         isWorkerDoingTask = false;
     }
-
-    public void TEST()
-    {
-        Debug.Log($"I'm worker [{this.gameObject.name}]");
-    }
 }

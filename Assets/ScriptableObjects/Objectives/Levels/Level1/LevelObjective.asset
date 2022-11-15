@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9790b7047e6c6b35a05381a844b3cf8, type: 3}
+  m_Script: {fileID: 11500000, guid: 423c03a550417a606913ac33a0b9c1ce, type: 3}
   m_Name: LevelObjective
   m_EditorClassIdentifier: 
-  tasks:
-  - {fileID: 11400000, guid: 3f8288833dfbe0f27b98be7c77d692a6, type: 2}

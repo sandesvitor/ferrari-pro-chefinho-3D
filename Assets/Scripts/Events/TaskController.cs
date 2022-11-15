@@ -19,35 +19,47 @@ public class TaskController : MonoBehaviour
 
     void Start()
     {
+        // INIT TASK VARIABLE VALUES:
         taskName = task.taskName;
         numberOfWorkersToStart = task.numberOfWorkersToStart;
         timeOfCompletion = task.timeOfCompletion;
         isCompleted = task.isCompleted;
         isTaskBeingDone = task.isTaskBeingDone;
-        id = task.id;
-    
+
+        // SUBSCRIBE EVENTS:    
         GameEventSystem.current.OnEnterTask += OnEnterTask;
+        GameEventSystem.current.OnExitTask += OnExitTask;
     }
 
-    private void OnEnterTask(int id)
+    private void OnEnterTask(int id, WorkerController worker)
     {
-        if (id != this.id)
+
+        if (id == this.id)
         {
-            return;
+            workers.Add(worker);
+
+            if (workers.Count == numberOfWorkersToStart && isCompleted == false)
+            {
+                workers.Add(worker);
+                StartCoroutine(StartTaskLifecycle());
+            }
         }
-        
-        if (workers.Count == numberOfWorkersToStart && isCompleted == false)
+    }
+    
+    private void OnExitTask(int id, WorkerController worker)
+    {
+        if (id == this.id)
         {
-            StartCoroutine(StartTaskLifecycle());
+            workers.Remove(worker);
         }
     }
 
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "WageSlave")
-        {
-            workers.Add(collider.gameObject.GetComponent<WorkerController>());
-            GameEventSystem.current.EnterTask(id);
+        {  
+            WorkerController worker = collider.gameObject.GetComponent<WorkerController>();
+            GameEventSystem.current.EnterTask(id, worker);
         }
         
     }
@@ -56,7 +68,8 @@ public class TaskController : MonoBehaviour
     {
         if (collider.tag == "WageSlave")
         {
-            workers.Remove(collider.gameObject.GetComponent<WorkerController>());
+            WorkerController worker = collider.gameObject.GetComponent<WorkerController>();
+            GameEventSystem.current.ExitTask(id, worker);
         }
     }
 
