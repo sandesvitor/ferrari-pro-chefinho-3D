@@ -40,10 +40,10 @@ public class WorkerController : MonoBehaviour
         }
     }
 
-    public void OnMouseDown()
-    {
-        CameraController.instance.followTransform = this.transform;
-    }
+    // public void OnMouseDown()
+    // {
+    //     CameraController.instance.followTransform = this.transform;
+    // }
 
     public void FollowMouse()
     {

@@ -12,6 +12,7 @@ public class UIProgressBarController : MonoBehaviour
     private void Awake()
     {
         TaskController.OnProgressBarAdded += AddProgressBar; 
+        TaskController.OnProgressBarRemoved += RemoveProgressBar; 
         TaskController.OnTaskStarted += StartProgressBarCountdown;
     }
 

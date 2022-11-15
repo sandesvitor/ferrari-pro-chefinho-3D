@@ -22,12 +22,7 @@ public class TaskController : MonoBehaviour
 
     public static event Action<int, Transform> OnProgressBarAdded = delegate { };
 
-
-    private void OnEnable()
-    {
-        OnProgressBarAdded(id, this.transform);
-        // OnTaskStarted(id, timeOfCompletion);
-    }
+    public static event Action<int> OnProgressBarRemoved = delegate { };
 
     void Start()
     {
@@ -41,6 +36,9 @@ public class TaskController : MonoBehaviour
         // SUBSCRIBE EVENTS:    
         GameEventSystem.current.OnEnterTask += OnEnterTask;
         GameEventSystem.current.OnExitTask += OnExitTask;
+
+        // TRIGGER PROGRESS BAR EVENT:
+        OnProgressBarAdded(id, this.transform);
     }
 
     private void OnEnterTask(int id, WorkerController worker)
