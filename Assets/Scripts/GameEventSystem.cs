@@ -1,18 +1,22 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameEventSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static GameEventSystem current;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        current = this;
+    }
+    
+    public event Action<int> OnEnterTask;
+    public void EnterTask(int id)
+    {
+        if(OnEnterTask != null)
+        {
+            OnEnterTask(id);
+        }
     }
 }

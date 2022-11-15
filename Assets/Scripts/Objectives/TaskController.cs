@@ -7,17 +7,15 @@ using UnityEngine.UI;
 public class TaskController : MonoBehaviour
 {
     public Task task;
+    public int id;
 
     public string taskName;
     public int numberOfWorkersToStart;
     public float timeOfCompletion;
     public bool isCompleted;
     public bool isTaskBeingDone;
-    public LevelObjectiveController levelObjectiveController;
 
-    [SerializeField] private Image progressBarFill;
-    
-    [SerializeField] private List<GameObject> workersInsideTaskList; 
+    [SerializeField] private List<WorkerController> workers;
 
     void Start()
     {
@@ -26,86 +24,86 @@ public class TaskController : MonoBehaviour
         timeOfCompletion = task.timeOfCompletion;
         isCompleted = task.isCompleted;
         isTaskBeingDone = task.isTaskBeingDone;
-
-        levelObjectiveController = GameObject.Find("LevelObjectiveController").GetComponent<LevelObjectiveController>();
-        levelObjectiveController.tasks.Add(this);
+        id = task.id;
     
-        progressBarFill.enabled = false;
+        GameEventSystem.current.OnEnterTask += OnEnterTask;
     }
 
-    void Update()
+    private void OnEnterTask(int id)
     {
-        bool startTimer = levelObjectiveController.CheckIfWorkerIsDoingTask();
-
-        if (startTimer == true && isTaskBeingDone == false)
+        if (id != this.id)
         {
-            StartCoroutine(TaskTimer());    
+            return;
+        }
+        
+        if (workers.Count == numberOfWorkersToStart && isCompleted == false)
+        {
+            StartCoroutine(StartTaskLifecycle());
         }
     }
 
-    public void BindWorkerToTask(GameObject worker)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (workersInsideTaskList.Count < numberOfWorkersToStart)
+        if (collider.tag == "WageSlave")
         {
-            workersInsideTaskList.Add(worker);
+            workers.Add(collider.gameObject.GetComponent<WorkerController>());
+            GameEventSystem.current.EnterTask(id);
+        }
+        
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.tag == "WageSlave")
+        {
+            workers.Remove(collider.gameObject.GetComponent<WorkerController>());
         }
     }
 
-    public void UnbindWorkerToTask(GameObject worker)
-    {
-        if (workersInsideTaskList.Count <= numberOfWorkersToStart)
-        {
-            workersInsideTaskList.Remove(worker);
-        }
-    }
-
-    public bool DoesTaskMeetConditionsToStart(GameObject worker)
-    {
-        bool haveRighNumberOfWorkers = workersInsideTaskList.Count == numberOfWorkersToStart ? true : false;
-        bool isWorkerInsideTask = workersInsideTaskList.Contains(worker);
-        return haveRighNumberOfWorkers && isWorkerInsideTask;
-    }
-
-    private Color GetProgressBarColor(float fillAmount)
-    {
-        if(fillAmount < 0.5f && fillAmount >= 0.25f)
-        {
-            return Color.yellow;
-        }
-        if(fillAmount < 0.25f)
-        {
-            return Color.red;
-        }
-
-        return Color.green;
-    }
-
-    public IEnumerator TaskTimer()
+    public IEnumerator StartTaskLifecycle()
     {
         float remainingDuration = timeOfCompletion;
         isTaskBeingDone = true;
-        progressBarFill.enabled = true;
+        //progressBarFill.enabled = true;
+
+        for (int i = 0; i < workers.Count; i++)
+        {
+            workers[i].StartTask();
+        }
 
         while(remainingDuration >= 0)
         {
-            progressBarFill.color = GetProgressBarColor(progressBarFill.fillAmount);
-            Debug.Log($"Remaining Seconds: {remainingDuration.ToString()} / FillAmount: {progressBarFill.fillAmount.ToString()}");
-            progressBarFill.fillAmount = Mathf.InverseLerp(0, timeOfCompletion, remainingDuration);
+            //progressBarFill.color = GetProgressBarColor(progressBarFill.fillAmount);
+            Debug.Log($"Remaining Seconds: {remainingDuration.ToString()}");
+            //progressBarFill.fillAmount = Mathf.InverseLerp(0, timeOfCompletion, remainingDuration);
             remainingDuration = remainingDuration - 1f;
             yield return new WaitForSeconds(1f);
         }
 
+        for (int i = 0; i < workers.Count; i++)
+        {
+            workers[i].FinishTask();
+        }
+
+        isTaskBeingDone = false;
         isCompleted = true;
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         if (isCompleted == false)
         {
             Gizmos.color = Color.gray;
             Gizmos.DrawSphere(this.transform.position, 4f);
         }
-        else
+        
+        if (isTaskBeingDone == true)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(this.transform.position, 4f);
+        }
+
+        if (isCompleted == true && isTaskBeingDone == false)
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawSphere(this.transform.position, 4f);
