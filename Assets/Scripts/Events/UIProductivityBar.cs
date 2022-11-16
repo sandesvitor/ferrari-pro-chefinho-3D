@@ -20,7 +20,6 @@ public class UIProductivityBar : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            Debug.Log("SPACE");
             GainProductivity(1f);
         }
     }

@@ -31,27 +31,10 @@ public class WorkerController : MonoBehaviour
         }
     }
 
-    private void HandlePathFindingMovement()
+    private void HandlePathFindingMovement(Waypoint waypoint)
     {
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        //     RaycastHit hit;
-
-        //     if (Physics.Raycast(ray, out hit))
-        //     {
-        //         // MOVE OUR AGENT
-        //         agent.SetDestination(hit.point);
-        //     }
-        // }
-
-        agent.SetDestination(coffeRoom.transform.position);
+        agent.SetDestination(waypoint.transform.position);
     }
-
-    // public void OnMouseDown()
-    // {
-    //     CameraController.instance.followTransform = this.transform;
-    // }
 
     public void FollowMouse()
     {

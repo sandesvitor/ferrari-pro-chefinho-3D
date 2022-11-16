@@ -17,6 +17,7 @@ public class TaskController : MonoBehaviour
     public bool isTaskBeingDone;
 
     [SerializeField] private List<WorkerController> workers;
+    [SerializeField] private List<Waypoint> waypoints;
 
     public static event Action<int, float> OnTaskStarted = delegate { };
 
@@ -108,24 +109,24 @@ public class TaskController : MonoBehaviour
         isCompleted = true;
     }
 
-    private void OnDrawGizmos()
-    {
-        if (isCompleted == false)
-        {
-            Gizmos.color = Color.gray;
-            Gizmos.DrawSphere(this.transform.position, 4f);
-        }
+    // private void OnDrawGizmos()
+    // {
+    //     if (isCompleted == false)
+    //     {
+    //         Gizmos.color = Color.gray;
+    //         Gizmos.DrawSphere(this.transform.position, 4f);
+    //     }
         
-        if (isTaskBeingDone == true)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(this.transform.position, 4f);
-        }
+    //     if (isTaskBeingDone == true)
+    //     {
+    //         Gizmos.color = Color.yellow;
+    //         Gizmos.DrawSphere(this.transform.position, 4f);
+    //     }
 
-        if (isCompleted == true && isTaskBeingDone == false)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawSphere(this.transform.position, 4f);
-        }
-    }
+    //     if (isCompleted == true && isTaskBeingDone == false)
+    //     {
+    //         Gizmos.color = Color.cyan;
+    //         Gizmos.DrawSphere(this.transform.position, 4f);
+    //     }
+    // }
 }
