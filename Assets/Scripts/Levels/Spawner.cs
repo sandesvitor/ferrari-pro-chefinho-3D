@@ -5,42 +5,42 @@ public class Spawner : MonoBehaviour
 {
     public GameObject prefab;
 
-    [SerializeField] private bool isWageSlaveHere = false;
+    // [SerializeField] private bool isWageSlaveHere = false;
     [SerializeField] private List<GameObject> workersInsideHumanResourcesList; 
 
 
     void Update()
     {
-        if (Input.GetKeyDown("space") && isWageSlaveHere == true)
+        if (Input.GetKeyDown("space"))
         {
             Vector3 spawnPosition = this.transform.position;
             Instantiate(prefab, spawnPosition, Quaternion.identity);
         }
     }
 
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.tag != "WageSlave")
-        {
-            return;
-        }
+    // void OnTriggerEnter(Collider collider)
+    // {
+    //     if (collider.gameObject.tag != "WageSlave")
+    //     {
+    //         return;
+    //     }
     
-        workersInsideHumanResourcesList.Add(collider.gameObject);
-        isWageSlaveHere = true;
-    }
+    //     workersInsideHumanResourcesList.Add(collider.gameObject);
+    //     // isWageSlaveHere = true;
+    // }
 
-    void OnTriggerExit(Collider collider)
-    {
-        if (collider.gameObject.tag != "WageSlave")
-        {
-            return;
-        }
+    // void OnTriggerExit(Collider collider)
+    // {
+    //     if (collider.gameObject.tag != "WageSlave")
+    //     {
+    //         return;
+    //     }
     
-        workersInsideHumanResourcesList.Remove(collider.gameObject);
+    //     workersInsideHumanResourcesList.Remove(collider.gameObject);
 
-        if (workersInsideHumanResourcesList.Count == 0)
-        {
-            isWageSlaveHere = false;
-        }
-    }
+    //     // if (workersInsideHumanResourcesList.Count == 0)
+    //     // {
+    //     //     isWageSlaveHere = false;
+    //     // }
+    // }
 }

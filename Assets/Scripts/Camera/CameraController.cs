@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        instance = this;
+        // instance = this;
 
         newPosition = this.transform.position;
         newRotation = this.transform.rotation;

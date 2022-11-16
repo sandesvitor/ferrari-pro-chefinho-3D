@@ -9,12 +9,18 @@ public class WorkerController : MonoBehaviour
     [SerializeField] private bool isWorkerDoingTask = false;
     [SerializeField] private Vector2 speedRange = new Vector2(5f, 10f);
 
+    private WaypointController waypointController;
+    private Waypoint coffeRoom;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         agent.speed = Random.Range(speedRange.x, speedRange.y);
+
+        waypointController = GameObject.Find("WayPointController").GetComponent<WaypointController>();
+        coffeRoom = waypointController.GetVacantWaypoint();
     }
 
     void Update()
@@ -25,24 +31,9 @@ public class WorkerController : MonoBehaviour
         }
     }
 
-    private void HandlePathFindingMovement()
+    private void HandlePathFindingMovement(Waypoint waypoint)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                // MOVE OUR AGENT
-                agent.SetDestination(hit.point);
-            }
-        }
-    }
-
-    public void OnMouseDown()
-    {
-        CameraController.instance.followTransform = this.transform;
+        agent.SetDestination(waypoint.transform.position);
     }
 
     public void FollowMouse()
