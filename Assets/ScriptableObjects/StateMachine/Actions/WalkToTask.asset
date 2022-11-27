@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dd9265520ef09b0c86e08aed9df6177, type: 3}
-  m_Name: FollowDecision
+  m_Script: {fileID: 11500000, guid: a3eb798be818c79b19bfbd705013cfe7, type: 3}
+  m_Name: WalkToTask
   m_EditorClassIdentifier: 

@@ -5,12 +5,14 @@ public class WorkerController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Camera cam;
-    [SerializeField] private bool isWorkerFollowingMouse = true;
+    [SerializeField] private bool isWorkerIdle = true;
+    [SerializeField] private bool isWorkerWalkingToTask = false;
     [SerializeField] private bool isWorkerDoingTask = false;
     [SerializeField] private Vector2 speedRange = new Vector2(5f, 10f);
+    
+    public int id;
 
-    private WaypointController waypointController;
-    private Waypoint coffeRoom;
+    private Transform destination;
 
     void Start()
     {
@@ -19,50 +21,50 @@ public class WorkerController : MonoBehaviour
 
         agent.speed = Random.Range(speedRange.x, speedRange.y);
 
-        waypointController = GameObject.Find("WayPointController").GetComponent<WaypointController>();
-        coffeRoom = waypointController.GetVacantWaypoint();
+        destination = this.transform;
+
+        GameEventSystem.current.OnWorkerSentToEnterTaskRoom += WalkToTask;
     }
 
     void Update()
     {
-        if(isWorkerFollowingMouse)
+        HandlePathFindingMovement(destination);
+    }
+
+    private void HandlePathFindingMovement(Transform transform)
+    {
+        agent.SetDestination(transform.position);
+    }
+
+    private void WalkToTask(int workerId, Waypoint waypoint)
+    {
+        if (workerId == this.id)
         {
-            HandlePathFindingMovement();
+            Debug.Log($"Worker ID [{workerId}], Waypoint [{waypoint.gameObject.name}]");
+            destination = waypoint.transform;
         }
     }
 
-    private void HandlePathFindingMovement(Waypoint waypoint)
+    public void WalkToTaskAction()
     {
-        agent.SetDestination(waypoint.transform.position);
+        isWorkerIdle = false;
+        isWorkerWalkingToTask = true;
     }
 
-    public void FollowMouse()
+    public void StayIdleAction()
     {
-        isWorkerFollowingMouse = true;
+        destination = this.transform;
+        isWorkerIdle = true;
+        isWorkerWalkingToTask = false;
     }
 
-    public void StopFollowingMouse()
+    public bool GetWalkToTaskStatus()
     {
-        isWorkerFollowingMouse = false;
+        return isWorkerWalkingToTask;
     }
 
-    public bool GetFollowStatus()
+    public bool GetIdleStatus()
     {
-        return isWorkerFollowingMouse;
-    }
-
-    public bool GetTaskStatus()
-    {
-        return isWorkerDoingTask;
-    }
-
-    public void StartTask()
-    {
-        isWorkerDoingTask = true;
-    }
-
-    public void FinishTask()
-    {
-        isWorkerDoingTask = false;
+        return isWorkerIdle;
     }
 }

@@ -18,12 +18,14 @@ public class TaskController : MonoBehaviour
 
     [SerializeField] private List<WorkerController> workers;
     [SerializeField] private List<Waypoint> waypoints;
+    
+    [SerializeField] private IdleWorkersRoomController idleWorkersRoomController;
 
-    public static event Action<int, float> OnTaskStarted = delegate { };
+    // public static event Action<int, float> OnTaskStarted = delegate { };
 
-    public static event Action<int, Transform> OnProgressBarAdded = delegate { };
+    // public static event Action<int, Transform> OnProgressBarAdded = delegate { };
 
-    public static event Action<int> OnProgressBarRemoved = delegate { };
+    // public static event Action<int> OnProgressBarRemoved = delegate { };
 
     void Start()
     {
@@ -34,99 +36,49 @@ public class TaskController : MonoBehaviour
         isCompleted = task.isCompleted;
         isTaskBeingDone = task.isTaskBeingDone;
 
-        // SUBSCRIBE EVENTS:    
-        GameEventSystem.current.OnEnterTask += OnEnterTask;
-        GameEventSystem.current.OnExitTask += OnExitTask;
+
+
+        // // SUBSCRIBE EVENTS:    
+        // GameEventSystem.current.OnEnterTask += OnEnterTask;
+        // GameEventSystem.current.OnExitTask += OnExitTask;
 
         // TRIGGER PROGRESS BAR EVENT:
-        OnProgressBarAdded(id, this.transform);
+        // OnProgressBarAdded(id, this.transform);
     }
 
-    private void OnEnterTask(int id, WorkerController worker)
+    void OnMouseOver()
     {
+        // Show UI with Task Informations
+    }
 
-        if (id == this.id)
+    void OnMouseExit()
+    {
+        // Remove UI with Task Informations
+    }
+
+    void OnMouseDown()
+    {
+        if (waypoints.Count == 0)
         {
-            workers.Add(worker);
-
-            if (workers.Count == numberOfWorkersToStart && isCompleted == false)
-            {
-                TaskController.OnTaskStarted(id, timeOfCompletion);
-                StartCoroutine(StartTaskLifecycle());
-            }
-        }
-    }
-    
-    private void OnExitTask(int id, WorkerController worker)
-    {
-        if (id == this.id)
-        {
-            workers.Remove(worker);
-        }
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag == "WageSlave")
-        {  
-            WorkerController worker = collider.gameObject.GetComponent<WorkerController>();
-            GameEventSystem.current.EnterTask(id, worker);
+            Debug.Log($"There is no more room in task {taskName}");
+            return;
         }
         
-    }
-
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.tag == "WageSlave")
-        {
-            WorkerController worker = collider.gameObject.GetComponent<WorkerController>();
-            GameEventSystem.current.ExitTask(id, worker);
-        }
-    }
-
-    public IEnumerator StartTaskLifecycle()
-    {
-        float remainingDuration = timeOfCompletion;
-        isTaskBeingDone = true;
-
-        for (int i = 0; i < workers.Count; i++)
-        {
-            workers[i].StartTask();
-        }
-
-        while(remainingDuration >= 0)
-        {
-            remainingDuration = remainingDuration - 1f;
-            yield return new WaitForSeconds(1f);
-        }
-
-        for (int i = 0; i < workers.Count; i++)
-        {
-            workers[i].FinishTask();
-        }
-
-        isTaskBeingDone = false;
-        isCompleted = true;
-    }
-
-    // private void OnDrawGizmos()
-    // {
-    //     if (isCompleted == false)
-    //     {
-    //         Gizmos.color = Color.gray;
-    //         Gizmos.DrawSphere(this.transform.position, 4f);
-    //     }
+        bool haveIdleWorkers = idleWorkersRoomController.GetIdleWorkersList().Count > 0;
         
-    //     if (isTaskBeingDone == true)
-    //     {
-    //         Gizmos.color = Color.yellow;
-    //         Gizmos.DrawSphere(this.transform.position, 4f);
-    //     }
+        if (haveIdleWorkers == false)
+        {
+            Debug.Log($"No idle workers! Please carry out more hires!");
+            return;
+        }
 
-    //     if (isCompleted == true && isTaskBeingDone == false)
-    //     {
-    //         Gizmos.color = Color.cyan;
-    //         Gizmos.DrawSphere(this.transform.position, 4f);
-    //     }
-    // }
+        WorkerController worker = idleWorkersRoomController.SelectOneWorkerFromList();
+        int workerId = worker.id;
+
+        Waypoint taskVacantWaypoint = waypoints[0];
+        waypoints.Remove(waypoints[0]);
+        
+        GameEventSystem.current.WorkerSentToEnterTaskRoom(workerId, taskVacantWaypoint);
+        
+    }
 }

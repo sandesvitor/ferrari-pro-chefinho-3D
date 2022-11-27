@@ -5,17 +5,10 @@ using UnityEngine;
 public class WaypointController : MonoBehaviour
 {
     [SerializeField] private List<Waypoint> waypoints;
-
-    public Waypoint defaultWaypoint;
-
-    void Start()
-    {
-        Debug.Log(waypoints.Count.ToString());
-    }
+    private Waypoint startingWaypoint;
 
     public Waypoint GetVacantWaypoint()
     {
-        Debug.Log(waypoints.Count.ToString());
         if (waypoints.Count > 0)
         {
             Waypoint waypointToReturn = waypoints[0];
@@ -24,6 +17,6 @@ public class WaypointController : MonoBehaviour
             return waypointToReturn;
         }
 
-        return defaultWaypoint;
+        return startingWaypoint;
     }
 }

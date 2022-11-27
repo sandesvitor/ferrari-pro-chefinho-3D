@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e360a5677e64095692ba94862a5e379, type: 3}
-  m_Name: Idle
+  m_Name: WalkToTask
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: 6d9fd4ad11bb90b89a15b6adc7e34c94, type: 2}
+  - {fileID: 11400000, guid: 030bc9f4628da8821aa05d84739a55fa, type: 2}
   transitions:
-  - decision: {fileID: 0}
-    trueState: {fileID: 0}
-    falseState: {fileID: 0}
-  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  - decision: {fileID: 11400000, guid: 7bce4a276c74595fcbc5f8c7581272a3, type: 2}
+    trueState: {fileID: 11400000, guid: d8cc745fd28dfb908ac14a4a833ac274, type: 2}
+    falseState: {fileID: 11400000, guid: 6b78d8b7cfe1d5bffbdbb39286837fdb, type: 2}
+  sceneGizmoColor: {r: 0.023584902, g: 0.0680968, b: 1, a: 1}

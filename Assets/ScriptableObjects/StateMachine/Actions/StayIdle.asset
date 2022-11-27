@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bb833e50e2c15936b3fdbdbd68a883e, type: 3}
-  m_Name: PerformTask
+  m_Script: {fileID: 11500000, guid: 1a0097cabf639a9eba8811f30f102d8b, type: 3}
+  m_Name: StayIdle
   m_EditorClassIdentifier: 

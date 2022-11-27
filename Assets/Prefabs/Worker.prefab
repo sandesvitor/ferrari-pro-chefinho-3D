@@ -108,14 +108,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6448049783093618165}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24497e1ffdb2aeb86b437badc6aad3fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: 527d27752843df3718f30587647b03f5, type: 2}
+  currentState: {fileID: 11400000, guid: d8cc745fd28dfb908ac14a4a833ac274, type: 2}
   worker: {fileID: 6448049783093618171}
-  remainState: {fileID: 11400000, guid: 2825b47d188113b13b34505821c6bec9, type: 2}
+  remainState: {fileID: 11400000, guid: 6b78d8b7cfe1d5bffbdbb39286837fdb, type: 2}
   aiActive: 1
 --- !u!114 &6448049783093618171
 MonoBehaviour:
@@ -131,9 +131,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 6448049783093618164}
   cam: {fileID: 0}
-  isWorkerFollowingMouse: 1
+  isWorkerIdle: 1
+  isWorkerWalkingToTask: 0
   isWorkerDoingTask: 0
   speedRange: {x: 7, y: 12}
+  id: 0
 --- !u!195 &6448049783093618164
 NavMeshAgent:
   m_ObjectHideFlags: 0

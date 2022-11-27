@@ -11,21 +11,31 @@ public class GameEventSystem : MonoBehaviour
         current = this;
     }
     
-    public event Action<int, WorkerController> OnEnterTask;
-    public void EnterTask(int id, WorkerController worker)
+    // public event Action<int, Waypoint> OnWorkerSpawn;
+    // public void WorkerSpawn(int id, Waypoint waypoint)
+    // {
+    //     if(OnWorkerSpawn != null)
+    //     {
+    //         OnWorkerSpawn(id, waypoint);
+    //     }
+    // }
+    
+    public event Action<int, Waypoint> OnWorkerSentToEnterTaskRoom;
+    public void WorkerSentToEnterTaskRoom(int workerId, Waypoint waypoint)
     {
-        if(OnEnterTask != null)
+        if(OnWorkerSentToEnterTaskRoom != null)
         {
-            OnEnterTask(id, worker);
+            OnWorkerSentToEnterTaskRoom(workerId, waypoint);
         }
     }
     
-    public event Action<int, WorkerController> OnExitTask;
-    public void ExitTask(int id, WorkerController worker)
-    {
-        if(OnExitTask != null)
-        {
-            OnExitTask(id, worker);
-        }
-    }
+    // public event Action<int> OnWorkerStartToDoTask;
+    // public void WorkerStartToDoTask(int id)
+    // {
+    //     if(OnWorkerStartToDoTask != null)
+    //     {
+    //         OnWorkerStartToDoTask(id);
+    //     }
+    // }
+    
 }
